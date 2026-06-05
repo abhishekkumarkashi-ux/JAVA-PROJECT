@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 // Item class
 class Item {
-    private String name
+    private String name;
     private double price;
 
     public Item(String name, double price) {
