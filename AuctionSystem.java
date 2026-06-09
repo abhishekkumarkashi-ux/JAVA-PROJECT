@@ -170,3 +170,97 @@ public class AuctionSystem {
         sc.close();
     }
 }
+
+// SAMPLE INPUT AND OUTPUT:
+
+// ===== MENU =====
+// 1. View Items
+// 2. Start Auction
+// 3. Place Bid
+// 4. End Auction
+// 5. Exit
+// Enter choice: 1
+
+// --- Available Items ---
+// 1. Laptop - $500.0
+// 2. Phone - $300.0
+// 3. Watch - $150.0
+
+// ===== MENU =====
+// 1. View Items
+// 2. Start Auction
+// 3. Place Bid
+// 4. End Auction
+// 5. Exit
+// Enter choice: 2
+
+// --- Available Items ---
+// 1. Laptop - $500.0
+// 2. Phone - $300.0
+// 3. Watch - $150.0
+// Select item number: 1
+
+// Auction started for: Laptop
+
+// ===== MENU =====
+// 1. View Items
+// 2. Start Auction
+// 3. Place Bid
+// 4. End Auction
+// 5. Exit
+// Enter choice: 3
+
+// Enter bidder name: Abhi
+// Enter bid amount: 600
+
+// Bid accepted!
+
+// ===== MENU =====
+// 1. View Items
+// 2. Start Auction
+// 3. Place Bid
+// 4. End Auction
+// 5. Exit
+// Enter choice: 3
+
+// Enter bidder name: Rahul
+// Enter bid amount: 550
+
+// Bid rejected! Must be higher than $600.0
+
+// ===== MENU =====
+// 1. View Items
+// 2. Start Auction
+// 3. Place Bid
+// 4. End Auction
+// 5. Exit
+// Enter choice: 3
+
+// Enter bidder name: Neha
+// Enter bid amount: 700
+
+// Bid accepted!
+
+// ===== MENU =====
+// 1. View Items
+// 2. Start Auction
+// 3. Place Bid
+// 4. End Auction
+// 5. Exit
+// Enter choice: 4
+
+// Auction ended for: Laptop
+
+// --- Winner ---
+// Winner: Neha
+// Winning Bid: $700.0
+
+// ===== MENU =====
+// 1. View Items
+// 2. Start Auction
+// 3. Place Bid
+// 4. End Auction
+// 5. Exit
+// Enter choice: 5
+
+// Exiting...
