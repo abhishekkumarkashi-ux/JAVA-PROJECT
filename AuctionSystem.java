@@ -36,12 +36,12 @@ class Auction {
     public void viewItems() {
         System.out.println("\n--- Available Items ---");
         for (int i = 0; i < items.length; i++) {
-            System.out.println((i + 1) + ". " + items[i].getName() +
-                    " - $" + items[i].getPrice());
+            System.out.println((i + 1) + ". " + items[i].getName()
+                    + " - $" + items[i].getPrice());
         }
     }
 
-    // Start auction for selected item
+    // Start auction
     public void startAuction(int index) {
         if (auctionActive) {
             System.out.println("\nAuction already active.");
@@ -58,23 +58,58 @@ class Auction {
         highestBid = items[index].getPrice();
         highestBidder = "No bidder yet";
 
-        System.out.println("\nAuction started for: " + items[index].getName());
+        System.out.println("\nAuction started for: "
+                + items[index].getName());
+        System.out.println("Starting Price: $" + highestBid);
     }
 
-    // Place bid
-    public void placeBid(String bidderName, double bidAmount) {
+    // Continuous bidding
+    public void placeBid(Scanner sc) {
         if (!auctionActive) {
             System.out.println("\nAuction not active.");
             return;
         }
 
-        if (bidAmount > highestBid) {
-            highestBid = bidAmount;
-            highestBidder = bidderName;
-            System.out.println("\nBid accepted!");
-        } else {
-            System.out.println("\nBid rejected! Must be higher than $" + highestBid);
+        System.out.println("\n===== BIDDING STARTED =====");
+        System.out.println("Type 'exit' to stop bidding.");
+
+        while (true) {
+
+            System.out.print("\nEnter bidder name: ");
+            String bidderName = sc.nextLine();
+
+            if (bidderName.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            System.out.print("Enter bid amount: ");
+            double bidAmount = sc.nextDouble();
+            sc.nextLine();
+
+            if (bidAmount > highestBid) {
+                highestBid = bidAmount;
+                highestBidder = bidderName;
+
+                System.out.println("Bid Accepted!");
+                System.out.println("Current Highest Bid: $"
+                        + highestBid + " by " + highestBidder);
+            } else {
+                System.out.println("Bid Rejected!");
+                System.out.println("Bid must be higher than $"
+                        + highestBid);
+            }
         }
+    }
+
+    // Show current highest bid
+    public void showCurrentBid() {
+        if (!auctionActive) {
+            System.out.println("\nNo active auction.");
+            return;
+        }
+
+        System.out.println("\nCurrent Highest Bid: $" + highestBid);
+        System.out.println("Highest Bidder: " + highestBidder);
     }
 
     // End auction
@@ -86,15 +121,18 @@ class Auction {
 
         auctionActive = false;
 
-        System.out.println("\nAuction ended for: " + items[currentItemIndex].getName());
+        System.out.println("\nAuction ended for: "
+                + items[currentItemIndex].getName());
+
         displayWinner();
     }
 
     // Display winner
     public void displayWinner() {
-        System.out.println("\n--- Winner ---");
+        System.out.println("\n===== WINNER =====");
+
         if (highestBidder.equals("No bidder yet")) {
-            System.out.println("No bids placed.");
+            System.out.println("No bids were placed.");
         } else {
             System.out.println("Winner: " + highestBidder);
             System.out.println("Winning Bid: $" + highestBid);
@@ -103,16 +141,16 @@ class Auction {
 }
 
 // Main class
-public class AuctionSystem {
+public class aution{
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
 
-        // Arrays for items and prices
         String[] itemNames = {"Laptop", "Phone", "Watch"};
         double[] prices = {500, 300, 150};
 
-        // Convert arrays into Item objects
         Item[] items = new Item[itemNames.length];
+
         for (int i = 0; i < itemNames.length; i++) {
             items[i] = new Item(itemNames[i], prices[i]);
         }
@@ -122,18 +160,20 @@ public class AuctionSystem {
         int choice;
 
         do {
-            System.out.println("\n===== MENU =====");
+            System.out.println("\n===== ONLINE AUCTION SYSTEM =====");
             System.out.println("1. View Items");
             System.out.println("2. Start Auction");
-            System.out.println("3. Place Bid");
-            System.out.println("4. End Auction");
-            System.out.println("5. Exit");
+            System.out.println("3. Start Bidding");
+            System.out.println("4. Show Current Highest Bid");
+            System.out.println("5. End Auction");
+            System.out.println("6. Exit");
             System.out.print("Enter choice: ");
 
             choice = sc.nextInt();
             sc.nextLine();
 
             switch (choice) {
+
                 case 1:
                     auction.viewItems();
                     break;
@@ -142,22 +182,23 @@ public class AuctionSystem {
                     auction.viewItems();
                     System.out.print("Select item number: ");
                     int index = sc.nextInt() - 1;
+                    sc.nextLine();
                     auction.startAuction(index);
                     break;
 
                 case 3:
-                    System.out.print("Enter bidder name: ");
-                    String name = sc.nextLine();
-                    System.out.print("Enter bid amount: ");
-                    double bid = sc.nextDouble();
-                    auction.placeBid(name, bid);
+                    auction.placeBid(sc);
                     break;
 
                 case 4:
-                    auction.endAuction();
+                    auction.showCurrentBid();
                     break;
 
                 case 5:
+                    auction.endAuction();
+                    break;
+
+                case 6:
                     System.out.println("Exiting...");
                     break;
 
@@ -165,102 +206,43 @@ public class AuctionSystem {
                     System.out.println("Invalid choice.");
             }
 
-        } while (choice != 5);
+        } while (choice != 6);
 
         sc.close();
     }
 }
 
-// SAMPLE INPUT AND OUTPUT:
 
-// ===== MENU =====
-// 1. View Items
-// 2. Start Auction
-// 3. Place Bid
-// 4. End Auction
-// 5. Exit
-// Enter choice: 1
+// SAMPLE INPUT:
+        
+// 2
+// 1
+// 3
+// Abhi
+// 600
+// Rahul
+// 750
+// Aman
+// 700
+// exit
+// 5
+// 6
 
-// --- Available Items ---
-// 1. Laptop - $500.0
-// 2. Phone - $300.0
-// 3. Watch - $150.0
+// SAMPLE OUTPUT:
 
-// ===== MENU =====
-// 1. View Items
-// 2. Start Auction
-// 3. Place Bid
-// 4. End Auction
-// 5. Exit
-// Enter choice: 2
+// Auction Started For: Laptop
+// Starting Price: $500.0
 
-// --- Available Items ---
-// 1. Laptop - $500.0
-// 2. Phone - $300.0
-// 3. Watch - $150.0
-// Select item number: 1
+// Bid Accepted!
+// Current Highest Bid = $600.0 by Abhi
 
-// Auction started for: Laptop
+// Bid Accepted!
+// Current Highest Bid = $750.0 by Rahul
 
-// ===== MENU =====
-// 1. View Items
-// 2. Start Auction
-// 3. Place Bid
-// 4. End Auction
-// 5. Exit
-// Enter choice: 3
+// Bid Rejected!
+// Bid must be greater than $750.0
 
-// Enter bidder name: Abhi
-// Enter bid amount: 600
-
-// Bid accepted!
-
-// ===== MENU =====
-// 1. View Items
-// 2. Start Auction
-// 3. Place Bid
-// 4. End Auction
-// 5. Exit
-// Enter choice: 3
-
-// Enter bidder name: Rahul
-// Enter bid amount: 550
-
-// Bid rejected! Must be higher than $600.0
-
-// ===== MENU =====
-// 1. View Items
-// 2. Start Auction
-// 3. Place Bid
-// 4. End Auction
-// 5. Exit
-// Enter choice: 3
-
-// Enter bidder name: Neha
-// Enter bid amount: 700
-
-// Bid accepted!
-
-// ===== MENU =====
-// 1. View Items
-// 2. Start Auction
-// 3. Place Bid
-// 4. End Auction
-// 5. Exit
-// Enter choice: 4
-
-// Auction ended for: Laptop
-
-// --- Winner ---
-// Winner: Neha
-// Winning Bid: $700.0
-
-// ===== MENU =====
-// 1. View Items
-// 2. Start Auction
-// 3. Place Bid
-// 4. End Auction
-// 5. Exit
-// Enter choice: 5
-
-// Exiting...
+// ===== AUCTION ENDED =====
+// Item: Laptop
+// Winner: Rahul
+// Winning Bid: $750.0
